@@ -31,10 +31,11 @@ public class CSVParseTest {
         // Start i at 10 to ensure that you do not parse a point value that doesn't have a year not contained in the data set.
         // We can end the loop at items.size() w/o truncating the last 10 items because if we have a point value, we know
         // that the corresponding year is in the items before it, not after it.
-        // We will miss some data points because of this, but it shouldn't matter too much because of the magnitude of our data set.
+        // We will 1 or 2 data points because of this, but it shouldn't matter too much because of the magnitude of our data set
+        // and the fact that a value has a low probability of being a daily double wager.
         for (int i = 10; i < items.size(); i++) {
             // If the second character in an item is a '$', as in "$1600", we know that this item contains a point value
-            // Make sure that the item has more than 1 index to ensure avoidnace of index out of bound error when trying to access the potential "$"
+            // Make sure that the item has more than 1 index to ensure avoidance of index out of bound error when trying to access the potential '$' char
             if (items.get(i).length() > 1 && items.get(i).toCharArray()[1] == '$') {
                 // We want to save this item as a point value character array so that we can access it's indices
                 char[] pointValueChars = items.get(i).toCharArray();
