@@ -12,11 +12,15 @@ import java.io.*;
 public class CSVParseTest {
 
     public static void main(String[] args) {
-        String CSVString = "4342,2003-06-17,Double Jeopardy!,\"THE AUSSIE POSSE\",\"$1500\",\"Born in Hawaii to Australian parents, this star of \"\"The Others\"\" moved to Sydney at age 4\",\"Nicole Kidman\"\n"
-                + "4342,2003-06-17,Double Jeopardy!,\"NOT YOUR EVERYDAY WORDS\",\"$1650\",\"This word starting with \"\"T\"\" means \"\"one who does believe in God\"\" (add an A & you'd get one who doesn't)\",\"theist\"\n"
-                + "4342,2003-06-17,Double Jeopardy!,\"ARTISTS & THEIR WORKS\",\"$2000\",\"\"\"Napoleon Crossing the Alps\"\" (1800)\",\"Jacques-Louis David\"\n"
-                + "4342,2003-06-17,Double Jeopardy!,\"LET'S GET SMALL\",\"$2003\",\"While you're enjoying the mountain scenery you might spot a tarn, a small one of these left by a glacier\",\"lake\"\n"
-                + "4342,2003-06-17,Double Jeopardy!,\"UNUSUAL TREES\",\"$20149\",\"This tree's odd appearance gave it an odd name from Lewis Carroll, \"\"for the snark was one of these, you see\"\"\",\"boojum tree\"";
+        String CSVString = "6240,2011-11-04,Jeopardy!,\"RHYME-BOT\",\"$1000\",\"The yellow-bellied type of this critter is sunbathing <a href=\"\"http://www.j-archive.com/media/2011-11-04_J_12.jpg\"\" target=\"\"_blank\"\">here</a>\",\"a marmot\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"MAPMAKER, MAPMAKER\",\"$450\",\"Get out the blue ink for this sea immediately north of Poland\",\"the Baltic\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"MTV VIDEO OF THE YEAR ARTISTS\",\"$400\",\"1988: \"\"Need You Tonight/Meditate\"\"\",\"INXS\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"BALLET\",\"$450\",\"Maria Tallchief played the sugarplum fairy in a 1954 New York City ballet performance of this classic\",\"The Nutcracker\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"CALCULATING THE MEASUREMENTS\",\"$400\",\"16 short tons minus 13 short tons leaves you this many pounds\",\"6,000 (3 tons, 2,000 per)\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"CANADIAN HISTORY\",\"$300\",\"In 1949 Canada joined the United States & 10 other nations to form this military alliance\",\"NATO\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"GIMME AN \"\"H\"\"\",\"$400\",\"Proverbially, \"\"he who\"\" does this \"\"is lost\"\"\",\"hesitates\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"MAPMAKER, MAPMAKER\",\"$2000\",\"However you draw the border between Nicaragua & this 2-named country, somebody gets mad, huh?\",\"Costa Rica\"\n"
+                + "6240,2011-11-04,Double Jeopardy!,\"MTV VIDEO OF THE YEAR ARTISTS\",\"$870\",\"2009: \"\"Single Ladies (Put A Ring On It)\"\"\",\"Beyonce\"\n";
         // Convert the CSVString (of type Text) to a string
 //        String CSVStr = value.toString();
         // Split the string at each comma, creating an ArrayList with the different attributes in each index.
@@ -28,9 +32,10 @@ public class CSVParseTest {
         // We can end the loop at items.size() w/o truncating the last 10 items because if we have a point value, we know
         // that the corresponding year is in the items before it, not after it.
         // We will miss some data points because of this, but it shouldn't matter too much because of the magnitude of our data set.
-        for (int i = 10; i < items.size() - 10; i++) {
+        for (int i = 10; i < items.size(); i++) {
             // If the second character in an item is a '$', as in "$1600", we know that this item contains a point value
-            if (items.get(i).toCharArray()[1] == '$') {
+            // Make sure that the item has more than 1 index to ensure avoidnace of index out of bound error when trying to access the potential "$"
+            if (items.get(i).length() > 1 && items.get(i).toCharArray()[1] == '$') {
                 // We want to save this item as a point value character array so that we can access it's indices
                 char[] pointValueChars = items.get(i).toCharArray();
                 // The variable lengthSubCount keeps track of how many fewer characters the string containing just digits will have in
@@ -85,7 +90,7 @@ public class CSVParseTest {
                     char[] airDateChars = airDateStr.toCharArray();
                     String yearStr = "" + airDateChars[0] + airDateChars[1] + airDateChars[2] + airDateChars[3];
                     System.out.println(yearStr + ", " + wager);
-                    
+
                     // output the follow key-value pair: <year, wager>
                     // output.collect(new Text(year), new IntWritable(wager));
                 }
